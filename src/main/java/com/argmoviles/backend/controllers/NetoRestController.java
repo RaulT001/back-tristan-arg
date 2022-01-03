@@ -1,5 +1,6 @@
 package com.argmoviles.backend.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,14 +35,6 @@ public class NetoRestController {
 	public List<Neto> get() {
 		return netoService.findAll();
 	}
-	
-	
-	
-	//yo xd xd 
-	//@GetMapping("/netos")
-	//public List<Neto> index() {
-	//	return netoService.findAll();
-	//}
 	
 	
 	@GetMapping("/netos/{id}")
@@ -135,6 +128,23 @@ public class NetoRestController {
 		
 		response.put("mensaje", "Neto ha sido eliminado con éxito!");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);		
+	}
+	
+	
+	@PostMapping("/netos/netosFilter")
+	public List<Neto> netosFilter(@RequestBody List<Integer> lista) {
+		List<Neto> ls = new ArrayList<Neto>();
+		try {
+			for(Integer id:lista) {
+				Neto neto = netoService.findById(Long.valueOf(id));
+				ls.add(neto);
+			}
+
+		} catch (DataAccessException e) {
+			throw e;
+		}
+		return ls;
+		
 	}
 	
 }

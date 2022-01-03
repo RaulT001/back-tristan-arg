@@ -20,6 +20,7 @@ public interface IActivacionDao extends CrudRepository<Activacion, Long> {
 			+ "where act_fecha = :dateDay", nativeQuery = true)
 	public List<Activacion> filterByDay(@Param("dateDay") Date dateDay);
 
+	
 	@Query(value = "SELECT count(*) FROM db_arg_backend.activaciones "
 			+ "where id_vendedor = :idVendedor AND id_producto = :idProducto "
 			+ "AND act_fecha BETWEEN :dateStart AND :dateEnd", nativeQuery = true)
@@ -27,13 +28,27 @@ public interface IActivacionDao extends CrudRepository<Activacion, Long> {
 			@Param("idProducto") Long idProducto, @Param("dateStart") Date dateStart,
 			@Param("dateEnd") Date dateEnd);
 
+	
+	//borrar
 	@Query(value = "SELECT count(*) FROM db_arg_backend.activaciones "
 			+ "where DAY(act_fecha) =  :dia and MONTH(act_fecha)= :mes and YEAR(act_fecha) = :anio"
 			+ " AND id_producto = :idProducto", nativeQuery = true)
 	public Integer countActivacionDia(@Param("dia") Integer dia,@Param("mes") Integer mes,@Param("anio") Integer anio,
 			@Param("idProducto") Long idProducto);
-	// @Query("from Usuarios")
-	// public List<Usuario> findAllUsuarios();
+	
+	
+	
+	
+	//ventas x día de Neto
+	@Query(value = "SELECT count(*) FROM db_arg_backend.activaciones "
+			+ "where DAY(act_fecha) =  :dia and MONTH(act_fecha)= :mes and YEAR(act_fecha) = :anio"
+			+ " AND id_neto = :idNeto", nativeQuery = true)
+	public Integer countActivacionDiaNeto(@Param("dia") Integer dia,@Param("mes") Integer mes,@Param("anio") Integer anio,
+			@Param("idNeto") Long idNeto);
+	
+	
+
+	
 	
 	
 	@Query(value = "SELECT * FROM db_arg_backend.activaciones where act_importe = :val", nativeQuery = true)

@@ -1,6 +1,8 @@
 package com.argmoviles.backend.models.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class Producto implements Serializable {
 
 	private String prod_nombre;
 	private String prod_descripcion;
-	private int prod_precio;
+	private BigDecimal prod_punto;
 
 	private String prod_estado;
 	@Temporal(TemporalType.DATE)
@@ -62,12 +64,16 @@ public class Producto implements Serializable {
 		this.prod_descripcion = prod_descripcion;
 	}
 
-	public int getProd_precio() {
-		return prod_precio;
+	
+
+	
+
+	public BigDecimal getProd_punto() {
+		return prod_punto;
 	}
 
-	public void setProd_precio(int prod_precio) {
-		this.prod_precio = prod_precio;
+	public void setProd_punto(BigDecimal prod_punto) {
+		this.prod_punto = prod_punto;
 	}
 
 	public String getProd_estado() {

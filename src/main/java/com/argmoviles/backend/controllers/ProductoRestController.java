@@ -23,7 +23,6 @@ import com.argmoviles.backend.models.entity.Producto;
 import com.argmoviles.backend.models.services.IProductoService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
-//@CrossOrigin(origins = { "https://backmoviles-front-moviles-prue.herokuapp.com" })
 @RestController
 @RequestMapping("/api")
 public class ProductoRestController {
@@ -98,7 +97,7 @@ public class ProductoRestController {
 		try {
 			productoActual.setProd_nombre(producto.getProd_nombre());
 			productoActual.setProd_descripcion(producto.getProd_descripcion());
-			productoActual.setProd_precio(producto.getProd_precio());
+			productoActual.setProd_punto(producto.getProd_punto());
 			productoActual.setProd_estado(producto.getProd_estado());
 			productoActual.setProd_fecha_crea(producto.getProd_fecha_crea());
 			productoActual.setProd_fecha_mod(producto.getProd_fecha_mod());
@@ -136,6 +135,7 @@ public class ProductoRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);		
 	}
 
+	
 	@PostMapping("/productos/productosFilter")
 	public List<Producto> productosFilter(@RequestBody List<Integer> lista) {
 		List<Producto> ls = new ArrayList<Producto>();

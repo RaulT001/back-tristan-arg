@@ -17,15 +17,26 @@ public interface IActivacionService {
 	
 
 	public void saveExcel(List<Activacion> activacionList);
-	
+
+
 
 	public List<Activacion> filterByMonth(Date dateFilter);
 
 	public List<Activacion> filterByDay(Date dateFilter);
 
+	
+	//borrar
+	public Integer countActivacionDia(Integer dia,Integer mes, Integer anio, Long idProducto);
+	
+	
+	
+	//ventas x día de Neto
+	public Integer countActivacionDiaNeto(Integer dia,Integer mes, Integer anio, Long idNeto);
+	
+	
+	//ventas por promotor de neto
 	public Integer countActivacionByMonth(Long idVendedor, Long idProducto, Date dateFilter);
 	
-	public Integer countActivacionDia(Integer dia,Integer mes, Integer anio, Long idProducto);
 	
 	
 	public List<Activacion> filterByColumnImporte(int value);
@@ -42,6 +53,9 @@ public interface IActivacionService {
 	public List<Activacion> getColummsbyIngreso(Long id);
 	public List<Activacion> getColummsbyVendedor(Long id);
 	public List<Activacion> getColummsbyNeto(Long id);
+
+
+	
 	
 
 }

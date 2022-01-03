@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -28,10 +27,10 @@ public class Activacion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private int act_numero_sec;
+	private Integer act_numero_sec;
 	private String act_cliente;
 	private String act_celular;
-	private int act_importe;
+	private Integer act_importe;
 	private int act_saldo;
 	private int act_inicial;
 	private String act_tipo;
@@ -44,7 +43,7 @@ public class Activacion implements Serializable {
 	private int act_cuota;
 	private String act_moneda;
 
-	private Date act_ciclo;
+	private String act_ciclo;
 	private String act_neto;
 	private String act_mayor_noventa;
 
@@ -64,6 +63,12 @@ public class Activacion implements Serializable {
 	private String act_ingreso;
 	private String act_modalidad;
 
+	private String nombre_producto;
+	private String nombre_vendedor;
+	private String nombre_neto;
+	
+	private String ff_vv;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnoreProperties({ "hipernateLazyInitializer", "handler" })
 	private Usuario usuario;
@@ -93,6 +98,14 @@ public class Activacion implements Serializable {
 
 	public Ingreso getIngreso() {
 		return ingreso;
+	}
+
+	public String getFf_vv() {
+		return ff_vv;
+	}
+
+	public void setFf_vv(String ff_vv) {
+		this.ff_vv = ff_vv;
 	}
 
 	public void setIngreso(Ingreso ingreso) {
@@ -127,14 +140,6 @@ public class Activacion implements Serializable {
 		this.id = id;
 	}
 
-	public int getAct_numero_sec() {
-		return act_numero_sec;
-	}
-
-	public void setAct_numero_sec(int act_numero_sec) {
-		this.act_numero_sec = act_numero_sec;
-	}
-
 	public String getAct_cliente() {
 		return act_cliente;
 	}
@@ -147,11 +152,19 @@ public class Activacion implements Serializable {
 		return act_celular;
 	}
 
-	public int getAct_importe() {
+	public Integer getAct_numero_sec() {
+		return act_numero_sec;
+	}
+
+	public void setAct_numero_sec(Integer act_numero_sec) {
+		this.act_numero_sec = act_numero_sec;
+	}
+
+	public Integer getAct_importe() {
 		return act_importe;
 	}
 
-	public void setAct_importe(int act_importe) {
+	public void setAct_importe(Integer act_importe) {
 		this.act_importe = act_importe;
 	}
 
@@ -219,11 +232,11 @@ public class Activacion implements Serializable {
 		this.act_moneda = act_moneda;
 	}
 
-	public Date getAct_ciclo() {
+	public String getAct_ciclo() {
 		return act_ciclo;
 	}
 
-	public void setAct_ciclo(Date act_ciclo) {
+	public void setAct_ciclo(String act_ciclo) {
 		this.act_ciclo = act_ciclo;
 	}
 
@@ -357,6 +370,30 @@ public class Activacion implements Serializable {
 
 	public void setAct_modalidad(String act_modalidad) {
 		this.act_modalidad = act_modalidad;
+	}
+
+	public String getNombre_producto() {
+		return nombre_producto;
+	}
+
+	public void setNombre_producto(String nombre_producto) {
+		this.nombre_producto = nombre_producto;
+	}
+
+	public String getNombre_vendedor() {
+		return nombre_vendedor;
+	}
+
+	public void setNombre_vendedor(String nombre_vendedor) {
+		this.nombre_vendedor = nombre_vendedor;
+	}
+
+	public String getNombre_neto() {
+		return nombre_neto;
+	}
+
+	public void setNombre_neto(String nombre_neto) {
+		this.nombre_neto = nombre_neto;
 	}
 
 	/**

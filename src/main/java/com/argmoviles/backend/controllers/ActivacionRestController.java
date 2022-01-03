@@ -23,15 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.argmoviles.backend.models.dto.VentasProveedorDTO;
 import com.argmoviles.backend.models.entity.Activacion;
+import com.argmoviles.backend.models.entity.Neto;
 import com.argmoviles.backend.models.entity.Producto;
 import com.argmoviles.backend.models.entity.Vendedor;
 import com.argmoviles.backend.models.services.IActivacionService;
-import com.argmoviles.backend.models.services.IIngresoService;
+import com.argmoviles.backend.models.services.INetoService;
 import com.argmoviles.backend.models.services.IProductoService;
 import com.argmoviles.backend.models.services.IVendedorService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
-//@CrossOrigin(origins = { "https://backmoviles-front-moviles-prue.herokuapp.com" })
 @RestController
 @RequestMapping("/api")
 public class ActivacionRestController {
@@ -45,10 +45,10 @@ public class ActivacionRestController {
 	@Autowired
 	private IProductoService productoService;
 	
+	//ventas x dia neto
 	@Autowired
-	private IIngresoService ingresoService;
-
-
+	private INetoService netoService;
+	
 
 	@GetMapping("/activaciones")
 	public List<Activacion> index() {
@@ -188,6 +188,8 @@ public class ActivacionRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
+	
+	//
 	@PostMapping("/activaciones/activacionesExcel")
 	public ResponseEntity<?> createExcel(@RequestBody List<Activacion> activacionList) {
 
@@ -207,6 +209,8 @@ public class ActivacionRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
+
+	
 	@PostMapping("/activaciones/filterByMonth")
 	public List<Activacion> filterByMonth(@RequestBody Date dateFilter) {
 		return activacionService.filterByMonth(dateFilter);
@@ -223,7 +227,8 @@ public class ActivacionRestController {
 	// }
 
 	
-	@PostMapping("/activaciones/ventaDia/{year}/{month}")
+	//no se borrar
+	/*@PostMapping("/activaciones/ventaDia/{year}/{month}")
 	public List<List<String>> ventaDia(@PathVariable Integer year,@PathVariable Integer month,@RequestBody List<Integer> lista) {
 
 		List<List<String>> lsVentaPromotor = new ArrayList<List<String>>();
@@ -231,6 +236,8 @@ public class ActivacionRestController {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.MONTH, month-1);
 		calendar.set(Calendar.YEAR, year);
+		
+		
 		List<Producto> lsProducto = new ArrayList<Producto>();
 		if(lista.size()>0) {
 			for(Integer id:lista) {
@@ -272,9 +279,66 @@ public class ActivacionRestController {
 		lsVentaPromotor.add(lsLineaTotalProducto);
 
 		return lsVentaPromotor;
+	} */
+	
+	
+	//ventas x día de Neto
+	@PostMapping("/activaciones/ventaDiaNeto/{year}/{month}")
+	public List<List<String>> ventaDiaNeto(@PathVariable Integer year,@PathVariable Integer month,@RequestBody List<Integer> lista) {
+
+		List<List<String>> lsVentaPromotor = new ArrayList<List<String>>();
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.MONTH, month-1);
+		calendar.set(Calendar.YEAR, year);
+		
+		
+		List<Neto> lsNeto = new ArrayList<Neto>();
+		if(lista.size()>0) {
+			for(Integer id:lista) {
+				Neto neto = netoService.findById(Long.valueOf(id));
+				lsNeto.add(neto);
+			}			
+		}else {
+			lsNeto = netoService.findAll();
+		}
+
+		List<String> lsLineaTotalNeto = new ArrayList<String>();
+		int totaldias = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int[] arrayTotaldia = new int[totaldias];
+		System.out.println(totaldias);
+		for (int i = 0; i < lsNeto.size(); i++) {
+			List<String> lsLinea = new ArrayList<String>();
+			lsLinea.add(lsNeto.get(i).getNet_pro());
+
+			Integer cantidadTotalPromotor = 0;
+			for (int day = 1;day<=totaldias;day++) {
+				
+				Integer cantidad = activacionService.countActivacionDiaNeto(day,month,year,
+						lsNeto.get(i).getId());
+				cantidadTotalPromotor += cantidad;
+				lsLinea.add(cantidad.toString());
+				arrayTotaldia[day-1] += cantidad;
+			}
+			lsLinea.add(cantidadTotalPromotor.toString());
+			lsVentaPromotor.add(lsLinea);
+		}
+
+		lsLineaTotalNeto.add("Total general");
+		Integer total = 0;
+		for (Integer cant : arrayTotaldia) {
+			lsLineaTotalNeto.add(cant.toString());
+			total += cant;
+		}
+		lsLineaTotalNeto.add(total.toString());
+		lsVentaPromotor.add(lsLineaTotalNeto);
+
+		return lsVentaPromotor;
 	}
 	
-	@PostMapping("/activaciones/ventaPromotor")
+	
+	//borrar xd xd 
+	/*@PostMapping("/activaciones/ventaPromotor")
 	public List<List<String>> ventaPromotor(@RequestBody VentasProveedorDTO obj) {
 
 		List<List<String>> lsVentaPromotor = new ArrayList<List<String>>();
@@ -329,7 +393,130 @@ public class ActivacionRestController {
 		lsVentaPromotor.add(lsLineaTotalProducto);
 
 		return lsVentaPromotor;
+	}*/
+	
+	
+	//ventas por promotor de neto
+	@PostMapping("/activaciones/ventaPromotorNeto")
+	public List<List<String>> ventaPromotorNeto(@RequestBody VentasProveedorDTO obj) {
+
+		List<List<String>> lsVentaPromotor = new ArrayList<List<String>>();
+
+		
+		List<Vendedor> lsVendedor = new ArrayList<Vendedor>();
+		if(obj.getLssellers().size()>0) {
+			for(Integer id:obj.getLssellers()) {
+				Vendedor vendedor = vendedorService.findById(Long.valueOf(id));
+				lsVendedor.add(vendedor);
+			}			
+		}else {
+			lsVendedor = vendedorService.findAll();
+		}
+		
+		
+		List<Neto> lsNeto = new ArrayList<Neto>();
+		if(obj.getLsnets().size()>0) {
+			for(Integer id:obj.getLsnets()) {
+				Neto neto = netoService.findById(Long.valueOf(id));
+				lsNeto.add(neto);
+			}			
+		}else {
+			lsNeto = netoService.findAll();
+		}
+		
+		
+		List<String> lsLineaTotalNeto = new ArrayList<String>();
+		int[] arrayTotalNeto = new int[lsNeto.size()];
+
+		for (Vendedor vendedor : lsVendedor) {
+			List<String> lsLinea = new ArrayList<String>();
+			lsLinea.add(vendedor.getVen_nombre() + " " + vendedor.getVen_apellido());		//borrar el apellido
+
+			Integer cantidadTotalPromotor = 0;
+			for (int i = 0; i < lsNeto.size(); i++) {
+				Integer cantidad = activacionService.countActivacionByMonth(vendedor.getId(),lsNeto.get(i).getId(), obj.getDateFilter());
+				
+				cantidadTotalPromotor += cantidad;
+				lsLinea.add(cantidad.toString());
+				arrayTotalNeto[i] += cantidad;
+			}
+			lsLinea.add(cantidadTotalPromotor.toString());
+			lsVentaPromotor.add(lsLinea);
+		}
+
+		lsLineaTotalNeto.add("Total general");
+		Integer total = 0;
+		for (Integer cant : arrayTotalNeto) {
+			lsLineaTotalNeto.add(cant.toString());
+			total += cant;
+		}
+		lsLineaTotalNeto.add(total.toString());
+		lsVentaPromotor.add(lsLineaTotalNeto);
+
+		return lsVentaPromotor;
 	}
+	
+	
+	//puntos por promotor de neto
+	@PostMapping("/activaciones/puntoPromotorNeto")
+	public List<List<String>> puntoPromotorNeto(@RequestBody VentasProveedorDTO obj) {
+
+		List<List<String>> lsVentaPromotor = new ArrayList<List<String>>();
+
+		
+		List<Vendedor> lsVendedor = new ArrayList<Vendedor>();
+		if(obj.getLssellers().size()>0) {
+			for(Integer id:obj.getLssellers()) {
+				Vendedor vendedor = vendedorService.findById(Long.valueOf(id));
+				lsVendedor.add(vendedor);
+			}			
+		}else {
+			lsVendedor = vendedorService.findAll();
+		}
+		
+		
+		List<Neto> lsNeto = new ArrayList<Neto>();
+		if(obj.getLsnets().size()>0) {
+			for(Integer id:obj.getLsnets()) {
+				Neto neto = netoService.findById(Long.valueOf(id));
+				lsNeto.add(neto);
+			}			
+		}else {
+			lsNeto = netoService.findAll();
+		}
+		
+		
+		
+		List<String> lsLineaTotalNeto = new ArrayList<String>();
+		int[] arrayTotalNeto = new int[lsNeto.size()];
+
+		for (Vendedor vendedor : lsVendedor) {
+			List<String> lsLinea = new ArrayList<String>();
+			lsLinea.add(vendedor.getVen_nombre() );		//
+			
+			Integer cantidadTotalPromotor = 0;
+			for (int i = 0; i < lsNeto.size(); i++) {
+				Integer cantidad = activacionService.countActivacionByMonth(vendedor.getId(),lsNeto.get(i).getId(), obj.getDateFilter());
+				cantidadTotalPromotor += cantidad;
+				lsLinea.add(cantidad.toString());
+				arrayTotalNeto[i] += cantidad;
+			}
+			lsLinea.add(cantidadTotalPromotor.toString());
+			lsVentaPromotor.add(lsLinea);
+		}
+
+		lsLineaTotalNeto.add("Total general");
+		Integer total = 0;
+		for (Integer cant : arrayTotalNeto) {
+			lsLineaTotalNeto.add(cant.toString());
+			total += cant;
+		}
+		lsLineaTotalNeto.add(total.toString());
+		lsVentaPromotor.add(lsLineaTotalNeto);
+
+		return lsVentaPromotor;
+	}
+	
 	
 	
 	@GetMapping("/activaciones/filterByColumnImporte/{value}")

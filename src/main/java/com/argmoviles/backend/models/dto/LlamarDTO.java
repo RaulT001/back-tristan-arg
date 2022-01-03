@@ -14,6 +14,7 @@ public class LlamarDTO {
 	public void setLlamar(Llamar llamar) {
 		this.llamar = llamar;
 	}
+	
 	public Activacion getActivacion() {
 		return activacion;
 	}

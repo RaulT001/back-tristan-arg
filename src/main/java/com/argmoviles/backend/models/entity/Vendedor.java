@@ -32,6 +32,8 @@ public class Vendedor implements Serializable {
 	// @Column(nullable = false, unique = true)
 	private int ven_documento;
 
+	private String ven_ffvv;
+
 	private String ven_estado;
 	@Temporal(TemporalType.DATE)
 	private Date ven_fecha_crea;
@@ -44,6 +46,14 @@ public class Vendedor implements Serializable {
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getVen_ffvv() {
+		return ven_ffvv;
+	}
+
+	public void setVen_ffvv(String ven_ffvv) {
+		this.ven_ffvv = ven_ffvv;
 	}
 
 	public void setId(Long id) {

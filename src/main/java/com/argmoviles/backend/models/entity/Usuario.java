@@ -2,14 +2,22 @@ package com.argmoviles.backend.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
 
 @Entity
 @Table(name = "usuarios")
@@ -19,23 +27,28 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String usu_nombre;
-	private String usu_apellido;
-	private int usu_celular;
-	private String usu_direccion;
+	private String username;
+	private String password;
+	private Boolean enable;
+	
+	private String nombre;
 
-	//@Column(nullable = false, unique = true)
-	private int usu_documento;
-	private String usu_usuario;
-	private String usu_contrasenia;
-	private String usu_estado;
-
-	@Temporal(TemporalType.DATE)
-	private Date usu_fecha_crea;
-	@Temporal(TemporalType.DATE)
-	private Date usu_fecha_mod;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "usuarios_roles",
+	joinColumns = @JoinColumn(name = "usuario_id"),
+	inverseJoinColumns = @JoinColumn(name = "role_id"),
+	uniqueConstraints = {@UniqueConstraint(columnNames = { "usuario_id", "role_id" }) })
+	private List<Role> roles;
 
 	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -44,88 +57,36 @@ public class Usuario implements Serializable {
 		this.id = id;
 	}
 
-	public String getUsu_nombre() {
-		return usu_nombre;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUsu_nombre(String usu_nombre) {
-		this.usu_nombre = usu_nombre;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getUsu_apellido() {
-		return usu_apellido;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setUsu_apellido(String usu_apellido) {
-		this.usu_apellido = usu_apellido;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public int getUsu_celular() {
-		return usu_celular;
+	public Boolean getEnable() {
+		return enable;
 	}
 
-	public void setUsu_celular(int usu_celular) {
-		this.usu_celular = usu_celular;
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
 	}
 
-	public String getUsu_direccion() {
-		return usu_direccion;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setUsu_direccion(String usu_direccion) {
-		this.usu_direccion = usu_direccion;
-	}
-
-	public int getUsu_documento() {
-		return usu_documento;
-	}
-
-	public void setUsu_documento(int usu_documento) {
-		this.usu_documento = usu_documento;
-	}
-
-	public String getUsu_usuario() {
-		return usu_usuario;
-	}
-
-	public void setUsu_usuario(String usu_usuario) {
-		this.usu_usuario = usu_usuario;
-	}
-
-	public String getUsu_contrasenia() {
-		return usu_contrasenia;
-	}
-
-	public void setUsu_contrasenia(String usu_contrasenia) {
-		this.usu_contrasenia = usu_contrasenia;
-	}
-
-	public String getUsu_estado() {
-		return usu_estado;
-	}
-
-	public void setUsu_estado(String usu_estado) {
-		this.usu_estado = usu_estado;
-	}
-
-	public Date getUsu_fecha_crea() {
-		return usu_fecha_crea;
-	}
-
-	public void setUsu_fecha_crea(Date usu_fecha_crea) {
-		this.usu_fecha_crea = usu_fecha_crea;
-	}
-
-	public Date getUsu_fecha_mod() {
-		return usu_fecha_mod;
-	}
-
-	public void setUsu_fecha_mod(Date usu_fecha_mod) {
-		this.usu_fecha_mod = usu_fecha_mod;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	/**

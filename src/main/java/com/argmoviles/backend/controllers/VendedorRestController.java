@@ -102,6 +102,7 @@ public class VendedorRestController {
 			vendedorActual.setVen_estado(vendedor.getVen_estado());
 			vendedorActual.setVen_fecha_crea(vendedor.getVen_fecha_crea());
 			vendedorActual.setVen_fecha_mod(vendedor.getVen_fecha_mod());
+			vendedorActual.setVen_ffvv(vendedor.getVen_ffvv());
 			
 			vendedorUpdate = vendedorService.save(vendedorActual);
 			
