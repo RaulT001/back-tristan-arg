@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.argmoviles.backend.models.entity.Vendedor;
 import com.argmoviles.backend.models.services.IVendedorService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
-//@CrossOrigin(origins = { "https://backmoviles-front-moviles-prue.herokuapp.com" })
+/*@CrossOrigin(origins = {"http://localhost:4200"})*/
+@CrossOrigin(origins = {"https://project.argmoviles.com"})
 @RestController
 @RequestMapping("/api")
 public class VendedorRestController {

@@ -21,7 +21,7 @@ public class ArgMovilesApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		String password = "contraseña7";
+		String password = "12345";
 		
 		for (int i = 0; i < 3; i++) {
 			String passwordBcrypt = passwordEncoder.encode(password);

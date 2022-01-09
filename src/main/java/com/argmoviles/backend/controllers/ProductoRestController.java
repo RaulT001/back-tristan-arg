@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.argmoviles.backend.models.entity.Producto;
 import com.argmoviles.backend.models.services.IProductoService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+/*@CrossOrigin(origins = {"http://localhost:4200"})*/
+@CrossOrigin(origins = {"https://project.argmoviles.com"})
 @RestController
 @RequestMapping("/api")
 public class ProductoRestController {

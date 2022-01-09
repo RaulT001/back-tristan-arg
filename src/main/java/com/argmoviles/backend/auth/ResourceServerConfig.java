@@ -105,9 +105,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public CorsConfigurationSource corsConfigurationSource() {
 		
 		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://project.argmoviles.com"));
-		//config.setAllowedOrigins(Arrays.asList("http://project.argmoviles.com"));
-		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+		config.setAllowedOrigins(Arrays.asList("https://project.argmoviles.com"));
+		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
 		config.setAllowCredentials(true);
 		config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
 		

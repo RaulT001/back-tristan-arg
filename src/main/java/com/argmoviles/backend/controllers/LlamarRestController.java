@@ -22,8 +22,8 @@ import com.argmoviles.backend.models.dto.LlamarDTO;
 import com.argmoviles.backend.models.entity.Llamar;
 import com.argmoviles.backend.models.services.ILlamarService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
-//@CrossOrigin(origins = { "https://backmoviles-front-moviles-prue.herokuapp.com" })
+/*@CrossOrigin(origins = {"http://localhost:4200"})*/
+@CrossOrigin(origins = {"https://project.argmoviles.com"})
 @RestController
 @RequestMapping("/api")
 public class LlamarRestController {
