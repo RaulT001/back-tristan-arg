@@ -31,8 +31,8 @@ import com.argmoviles.backend.models.services.INetoService;
 import com.argmoviles.backend.models.services.IProductoService;
 import com.argmoviles.backend.models.services.IVendedorService;
 
-/*@CrossOrigin(origins = { "http://localhost:4200" })*/
-@CrossOrigin(origins = { "https://project.argmoviles.com" })
+@CrossOrigin(origins = { "http://localhost:4200" })
+/*@CrossOrigin(origins = { "https://project.argmoviles.com" })*/
 @RestController
 @RequestMapping("/api")
 public class ActivacionRestController {

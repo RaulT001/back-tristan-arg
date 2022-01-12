@@ -29,7 +29,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		
 		
 		/* activaciones */
-		.antMatchers(HttpMethod.GET, "/api/activaciones").hasAnyRole("USER", "ADMIN")
+		/*.antMatchers(HttpMethod.GET, "/api/activaciones").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.GET, "/api/activaciones/{id}").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/activaciones").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.PUT, "/api/activaciones/{id}").hasAnyRole("USER", "ADMIN")
@@ -40,14 +40,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, "/api/activaciones/ventaDiaNeto/{year}/{month}").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.POST, "/activaciones/ventaPromotorNeto").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.POST, "/api//activaciones/puntoPromotorNeto").hasAnyRole("USER", "ADMIN")
-		.antMatchers(HttpMethod.GET, "/api/activaciones/**").hasAnyRole("USER", "ADMIN")
+		.antMatchers(HttpMethod.GET, "/api/activaciones/**").hasAnyRole("USER", "ADMIN")*/
 		
 		/* clientes */
-		.antMatchers(HttpMethod.GET, "/api/clientes").hasAnyRole("USER", "ADMIN")
+		/*.antMatchers(HttpMethod.GET, "/api/clientes").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.GET, "/api/clientes/{id}").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/clientes").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.PUT, "/api/clientes/{id}").hasAnyRole("USER", "ADMIN")
-		.antMatchers(HttpMethod.DELETE, "/api/clientes/{id}").hasRole("ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/api/clientes/{id}").hasRole("ADMIN")*/
 		
 		/* ingresos */
 		.antMatchers(HttpMethod.GET, "/api/ingresos").hasAnyRole("USER", "ADMIN")
@@ -57,34 +57,34 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		.antMatchers(HttpMethod.DELETE, "/api/ingresos/{id}").hasRole("ADMIN")
 		
 		/* llamadas */
-		.antMatchers(HttpMethod.GET, "/api/llamadas").hasAnyRole("USER", "ADMIN")
+		/*.antMatchers(HttpMethod.GET, "/api/llamadas").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.GET, "/api/llamadas/{id}").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/llamadas").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.PUT, "/api/llamadas/{id}").hasAnyRole("USER", "ADMIN")
-		.antMatchers(HttpMethod.DELETE, "/api/llamadas/{id}").hasRole("ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/api/llamadas/{id}").hasRole("ADMIN")*/
 		
 		/* netos */
-		.antMatchers(HttpMethod.GET, "/api/netos").hasAnyRole("USER", "ADMIN")
+		/*.antMatchers(HttpMethod.GET, "/api/netos").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.GET, "/api/netos/{id}").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/netos").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.PUT, "/api/netos/{id}").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.DELETE, "/api/netos/{id}").hasRole("ADMIN")
-		.antMatchers(HttpMethod.POST, "/api/netos/netosFilter").hasAnyRole("USER", "ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/netos/netosFilter").hasAnyRole("USER", "ADMIN")*/
 		
 		/* productos */
-		.antMatchers(HttpMethod.GET, "/api/productos").hasAnyRole("USER", "ADMIN")
+		/*.antMatchers(HttpMethod.GET, "/api/productos").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.GET, "/api/productos/{id}").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/productos").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.PUT, "/api/productos/{id}").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.DELETE, "/api/productos/{id}").hasRole("ADMIN")
-		.antMatchers(HttpMethod.POST, "/api/productos/productosFilter").hasAnyRole("USER", "ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/productos/productosFilter").hasAnyRole("USER", "ADMIN")*/
 		
 		/* vendedores */
-		.antMatchers(HttpMethod.GET, "/api/vendedores").hasAnyRole("USER", "ADMIN")
+		/*.antMatchers(HttpMethod.GET, "/api/vendedores").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.GET, "/api/vendedores/{id}").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/vendedores").hasAnyRole("USER", "ADMIN")
 		.antMatchers(HttpMethod.PUT, "/api/vendedores/{id}").hasAnyRole("USER", "ADMIN")
-		.antMatchers(HttpMethod.DELETE, "/api/vendedores/{id}").hasRole("ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/api/vendedores/{id}").hasRole("ADMIN")*/
 		
 		
 		
@@ -105,7 +105,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public CorsConfigurationSource corsConfigurationSource() {
 		
 		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowedOrigins(Arrays.asList("https://project.argmoviles.com"));
+		config.setAllowedOrigins(Arrays.asList("https://project.argmoviles.com", "http://localhost:4200"));
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
 		config.setAllowCredentials(true);
 		config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
